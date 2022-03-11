@@ -217,6 +217,7 @@ container.addEventListener('touchstart', funTouchStart, false);
 let move = "stop"
 function funTouchStart(EO) {
     EO = EO || window.event;
+    EO.preventDefault();
     var touchInfoStart = EO.targetTouches[0];
     var touchXs = touchInfoStart.pageX;
     var touchYs = touchInfoStart.pageY;
