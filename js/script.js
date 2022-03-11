@@ -47,7 +47,7 @@ const renderCalendar = () => {
 
 
     document.querySelector(".date h1").innerHTML
-        = months[date.getMonth()];
+        = `${months[date.getMonth()]} ${date.getFullYear()}` ;
 
     const container = document.querySelector('.container');
 
