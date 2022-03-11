@@ -253,10 +253,10 @@ function funTouchEnd(EO) {
     // EO.preventDefault();
 
     if (move == "left") {
-        date.setMonth(date.getMonth() - 1);
+        date.setMonth(date.getMonth() + 1);
         renderCalendar();
     } else if (move == "right") {
-        date.setMonth(date.getMonth() + 1);
+        date.setMonth(date.getMonth() - 1);
         renderCalendar();
     }
     move="stop";
