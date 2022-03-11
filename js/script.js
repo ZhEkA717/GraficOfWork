@@ -28,43 +28,76 @@ const renderCalendar = () => {
             'Четверг',
             'Пятница',
             'Суббота'
-        ]
+        ],
+        fons ={
+            jan:"../imgs/jan.jpg",
+            feb:"../imgs/feb.jpg",
+            mart:"../imgs/mart.jpg",
+            apr:"../imgs/apr.jpg",
+            may:"../imgs/may.jpg",
+            jn:"../imgs/jn.jpg",
+            jl:"../imgs/jl.jpg",
+            agt:"../imgs/agt.jpg",
+            sept:"../imgs/sept.jpg",
+            oct:"../imgs/oct.jpg",
+            nov:"../imgs/nov.jpg",
+            dec:"../imgs/dec.jpg"
+        }
+
 
     document.querySelector(".date h1").innerHTML
         = months[date.getMonth()];
 
-    // for (let i = 0; i < months.length; i++) {
-    //     let letterArray = months[i].split("");
-    //     for (let j = 0; j < letterArray.length; j++) {
-    //         if (j == letterArray.length - 1 && (letterArray[j] == "ь" ||
-    //             letterArray[j] == "й")) {
-    //             letterArray.pop();
-    //             letterArray.push('я');
-    //         } else if (j == letterArray.length - 1 && letterArray[j] == "т") {
-    //             letterArray.push('a');
-    //         }
-    //     }
-    //     months[i] = letterArray.join("");
-    // }
+    const container = document.querySelector('.container');
+        
+    switch (months[date.getMonth()]) {
+        case "Январь":container.style.backgroundImage=`url('${fons.jan}')`;
+            break;
+        case "Февраль":container.style.backgroundImage=`url('${fons.feb}')`;
+            break;
+        case "Март":container.style.backgroundImage=`url('${fons.mart}')`;
+            break;
+        case "Апрель":container.style.backgroundImage=`url('${fons.apr}')`;
+            break;
+        case "Май":container.style.backgroundImage=`url('${fons.may}')`;
+            break;
+        case "Июнь":container.style.backgroundImage=`url('${fons.jn}')`;
+            break;
+        case "Июль":container.style.backgroundImage=`url('${fons.jl}')`;
+            break;
+        case "Август":container.style.backgroundImage=`url('${fons.agt}')`;
+            break;
+        case "Сентябрь":container.style.backgroundImage=`url('${fons.sept}')`;
+            break;
+        case "Октябрь":container.style.backgroundImage=`url('${fons.oct}')`;
+            break;
+        case "Ноябрь":container.style.backgroundImage=`url('${fons.nov}')`;
+            break;
+        case "Декабрь":container.style.backgroundImage=`url('${fons.dec}')`;
+            break;
+    
+        default:
+            break;
+    }
 
-    setTimeout(updateTime,0);
+    updateTime();
     function updateTime() {
         var currTime = new Date();
         var currTimeStr = formatDateTime(currTime);
         document.querySelector(".date p").innerHTML =
             `${currTimeStr}`;
-            setTimeout(updateTime,1000);
+        setTimeout(updateTime, 1000);
     }
     // форматирует переданную дату-время в формате дд.мм.гггг чч:мм:сс
     function formatDateTime(dt) {
-        var year=dt.getFullYear();
-        var month=dt.getMonth()+1;
+        var year = dt.getFullYear();
+        var month = dt.getMonth() + 1;
         var dayW = dt.getDay();
-        var day=dt.getDate();
-        var hours=dt.getHours();
-        var minutes=dt.getMinutes();
-        var seconds=dt.getSeconds();
-        return weekdays[dayW] +" "+ str0l(day,2) + '.' + str0l(month,2) + '.' + year + ' ' + str0l(hours,2) + ':' + str0l(minutes,2) + ':' + str0l(seconds,2);
+        var day = dt.getDate();
+        var hours = dt.getHours();
+        var minutes = dt.getMinutes();
+        var seconds = dt.getSeconds();
+        return weekdays[dayW] + " " + str0l(day, 2) + '.' + str0l(month, 2) + '.' + year + ' ' + str0l(hours, 2) + ':' + str0l(minutes, 2) + ':' + str0l(seconds, 2);
     }
 
     // дополняет строку val слева нулями до длины Len
@@ -95,6 +128,16 @@ const renderCalendar = () => {
         }
         monthDays.innerHTML = days;
     }
+
+    const divArray = document.querySelectorAll(".days div");
+
+    divArray.forEach((item, i) => {
+        if (i == 5 || i == 6 || i == 12 || i == 13 || i == 19
+            || i == 20 || i == 26 || i == 27 || i == 33 || i == 34) {
+            item.style.color = "rgba(255,0,0,0.8)";
+        }
+    });
+
 }
 
 
@@ -121,7 +164,6 @@ document.querySelector(".days").addEventListener('click', (EO) => {
         && el.childNodes.length == 3) {
         el.innerHTML = el.childNodes[0].data;
     }
-
 });
 
 
