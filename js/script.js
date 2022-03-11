@@ -150,6 +150,14 @@ document.querySelector('.next').addEventListener('click', () => {
     date.setMonth(date.getMonth() + 1);
     renderCalendar();
 });
+document.querySelector(".prev").addEventListener('touchend', () => {
+    date.setMonth(date.getMonth() - 1);
+    renderCalendar();
+});
+document.querySelector('.next').addEventListener('touchend', () => {
+    date.setMonth(date.getMonth() + 1);
+    renderCalendar();
+});
 
 document.addEventListener('keydown', (EO) => {
     if (EO.code === "ArrowLeft") {
@@ -208,7 +216,6 @@ container.addEventListener('touchstart', funTouchStart, false);
 let move = "stop"
 function funTouchStart(EO) {
     EO = EO || window.event;
-    EO.preventDefault();
     var touchInfoStart = EO.targetTouches[0];
     var touchXs = touchInfoStart.pageX;
     var touchYs = touchInfoStart.pageY;
@@ -241,7 +248,7 @@ function funTouchStart(EO) {
 container.addEventListener('touchend', funTouchEnd, false);
 function funTouchEnd(EO) {
     EO = EO || window.event;
-    EO.preventDefault();
+    // EO.preventDefault();
 
     if (move == "left") {
         date.setMonth(date.getMonth() - 1);
@@ -250,7 +257,7 @@ function funTouchEnd(EO) {
         date.setMonth(date.getMonth() + 1);
         renderCalendar();
     }
-    console.log(move);
+    move="stop";
 }
 
 
