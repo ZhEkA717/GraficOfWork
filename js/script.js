@@ -29,19 +29,19 @@ const renderCalendar = () => {
             'Пятница',
             'Суббота'
         ],
-        fons ={
-            jan:"../imgs/jan.jpg",
-            feb:"../imgs/feb.jpg",
-            mart:"../imgs/mart.jpg",
-            apr:"../imgs/apr.jpg",
-            may:"../imgs/may.jpg",
-            jn:"../imgs/jn.jpg",
-            jl:"../imgs/jl.jpg",
-            agt:"../imgs/agt.jpg",
-            sept:"../imgs/sept.jpg",
-            oct:"../imgs/oct.jpg",
-            nov:"../imgs/nov.jpg",
-            dec:"../imgs/dec.jpg"
+        fons = {
+            jan: "../imgs/jan.jpg",
+            feb: "../imgs/feb.jpg",
+            mart: "../imgs/mart.jpg",
+            apr: "../imgs/apr.jpg",
+            may: "../imgs/may.jpg",
+            jn: "../imgs/jn.jpg",
+            jl: "../imgs/jl.jpg",
+            agt: "../imgs/agt.jpg",
+            sept: "../imgs/sept.jpg",
+            oct: "../imgs/oct.jpg",
+            nov: "../imgs/nov.jpg",
+            dec: "../imgs/dec.jpg"
         }
 
 
@@ -49,33 +49,33 @@ const renderCalendar = () => {
         = months[date.getMonth()];
 
     const container = document.querySelector('.container');
-        
+
     switch (months[date.getMonth()]) {
-        case "Январь":container.style.backgroundImage=`url('${fons.jan}')`;
+        case "Январь": container.style.backgroundImage = `url('${fons.jan}')`;
             break;
-        case "Февраль":container.style.backgroundImage=`url('${fons.feb}')`;
+        case "Февраль": container.style.backgroundImage = `url('${fons.feb}')`;
             break;
-        case "Март":container.style.backgroundImage=`url('${fons.mart}')`;
+        case "Март": container.style.backgroundImage = `url('${fons.mart}')`;
             break;
-        case "Апрель":container.style.backgroundImage=`url('${fons.apr}')`;
+        case "Апрель": container.style.backgroundImage = `url('${fons.apr}')`;
             break;
-        case "Май":container.style.backgroundImage=`url('${fons.may}')`;
+        case "Май": container.style.backgroundImage = `url('${fons.may}')`;
             break;
-        case "Июнь":container.style.backgroundImage=`url('${fons.jn}')`;
+        case "Июнь": container.style.backgroundImage = `url('${fons.jn}')`;
             break;
-        case "Июль":container.style.backgroundImage=`url('${fons.jl}')`;
+        case "Июль": container.style.backgroundImage = `url('${fons.jl}')`;
             break;
-        case "Август":container.style.backgroundImage=`url('${fons.agt}')`;
+        case "Август": container.style.backgroundImage = `url('${fons.agt}')`;
             break;
-        case "Сентябрь":container.style.backgroundImage=`url('${fons.sept}')`;
+        case "Сентябрь": container.style.backgroundImage = `url('${fons.sept}')`;
             break;
-        case "Октябрь":container.style.backgroundImage=`url('${fons.oct}')`;
+        case "Октябрь": container.style.backgroundImage = `url('${fons.oct}')`;
             break;
-        case "Ноябрь":container.style.backgroundImage=`url('${fons.nov}')`;
+        case "Ноябрь": container.style.backgroundImage = `url('${fons.nov}')`;
             break;
-        case "Декабрь":container.style.backgroundImage=`url('${fons.dec}')`;
+        case "Декабрь": container.style.backgroundImage = `url('${fons.dec}')`;
             break;
-    
+
         default:
             break;
     }
@@ -149,6 +149,19 @@ document.querySelector(".prev").addEventListener('click', () => {
 document.querySelector('.next').addEventListener('click', () => {
     date.setMonth(date.getMonth() + 1);
     renderCalendar();
+});
+
+document.addEventListener('keydown', (EO) => {
+    if (EO.code ==="ArrowLeft") {
+        date.setMonth(date.getMonth() - 1);
+        renderCalendar();
+    }
+});
+document.addEventListener('keydown', (EO) => {
+    if (EO.code === "ArrowRight") {
+        date.setMonth(date.getMonth() + 1);
+        renderCalendar();
+    }
 });
 
 renderCalendar();
