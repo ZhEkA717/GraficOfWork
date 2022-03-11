@@ -18,6 +18,11 @@ html{
         font-size: 40%;
     }
 }
+@media (max-width:350px){
+    html{
+        font-size: 35%;
+    }
+}
 @media (max-width:300px){
     html{
         font-size: 30%;
