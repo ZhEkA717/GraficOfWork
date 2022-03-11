@@ -30,40 +30,41 @@ const renderCalendar = () => {
             'Суббота'
         ]
 
-    console.log(date.getDay());
-
     document.querySelector(".date h1").innerHTML
         = months[date.getMonth()];
 
-    for (let i = 0; i < months.length; i++) {
-        let letterArray = months[i].split("");
-        for (let j = 0; j < letterArray.length; j++) {
-            if (j == letterArray.length - 1 && (letterArray[j] == "ь" ||
-                letterArray[j] == "й")) {
-                letterArray.pop();
-                letterArray.push('я');
-            } else if (j == letterArray.length - 1 && letterArray[j] == "т") {
-                letterArray.push('a');
-            }
-        }
-        months[i] = letterArray.join("");
-    }
+    // for (let i = 0; i < months.length; i++) {
+    //     let letterArray = months[i].split("");
+    //     for (let j = 0; j < letterArray.length; j++) {
+    //         if (j == letterArray.length - 1 && (letterArray[j] == "ь" ||
+    //             letterArray[j] == "й")) {
+    //             letterArray.pop();
+    //             letterArray.push('я');
+    //         } else if (j == letterArray.length - 1 && letterArray[j] == "т") {
+    //             letterArray.push('a');
+    //         }
+    //     }
+    //     months[i] = letterArray.join("");
+    // }
 
-    // document.querySelector(".date p").innerHTML
-    //     = `${weekdays[date.getDay()]}, ${date.getDate()} ${months[date.getMonth()]} ${date.getFullYear()}`;
-    setInterval(updateTime, 1000);
+    setTimeout(updateTime,0);
     function updateTime() {
         var currTime = new Date();
         var currTimeStr = formatDateTime(currTime);
         document.querySelector(".date p").innerHTML =
-            `${weekdays[date.getDay()]}, ${date.getDate()} ${months[date.getMonth()]} ${date.getFullYear()}, ${currTimeStr}`;
+            `${currTimeStr}`;
+            setTimeout(updateTime,1000);
     }
     // форматирует переданную дату-время в формате дд.мм.гггг чч:мм:сс
     function formatDateTime(dt) {
-        var hours = dt.getHours();
-        var minutes = dt.getMinutes();
-        var seconds = dt.getSeconds();
-        return str0l(hours, 2) + ':' + str0l(minutes, 2) + ':' + str0l(seconds, 2);
+        var year=dt.getFullYear();
+        var month=dt.getMonth()+1;
+        var dayW = dt.getDay();
+        var day=dt.getDate();
+        var hours=dt.getHours();
+        var minutes=dt.getMinutes();
+        var seconds=dt.getSeconds();
+        return weekdays[dayW] +" "+ str0l(day,2) + '.' + str0l(month,2) + '.' + year + ' ' + str0l(hours,2) + ':' + str0l(minutes,2) + ':' + str0l(seconds,2);
     }
 
     // дополняет строку val слева нулями до длины Len
