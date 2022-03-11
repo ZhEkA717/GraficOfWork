@@ -152,7 +152,7 @@ document.querySelector('.next').addEventListener('click', () => {
 });
 
 document.addEventListener('keydown', (EO) => {
-    if (EO.code ==="ArrowLeft") {
+    if (EO.code === "ArrowLeft") {
         date.setMonth(date.getMonth() - 1);
         renderCalendar();
     }
@@ -183,5 +183,57 @@ document.querySelector(".days").addEventListener('click', (EO) => {
 
 
 
+// swipe--------------------------------
 
+var container = document.querySelector('.container');
+container.addEventListener('touchstart', funTouchStart, false);
+let move = "stop"
+function funTouchStart(EO) {
+    EO = EO || window.event;
+    EO.preventDefault();
+    var touchInfoStart = EO.targetTouches[0];
+    var touchXs = touchInfoStart.pageX;
+    var touchYs = touchInfoStart.pageY;
+
+    container.addEventListener('touchmove', funTouchMove, false);
+
+    function funTouchMove(EO) {
+        EO = EO || window.event;
+        EO.preventDefault();
+        container.addEventListener('touchend', funTouchEnd, false);
+        var touchInfoMove = EO.targetTouches[0];
+        var touchX1 = touchInfoMove.pageX;
+        var touchY1 = touchInfoMove.pageY;
+        function funTouchEnd(EO) {
+            EO = EO || window.event;
+            EO.preventDefault();
+            var touchXm = touchX1;
+            var touchYm = touchY1;
+
+            var minSwipe = 20;
+
+            if (touchXs > touchXm && touchXs - touchXm >= minSwipe) {
+                if (Math.abs(touchXs - touchXm) > Math.abs(touchYs - touchYm)) {
+                    move = 'left';
+                    date.setMonth(date.getMonth() - 1);
+                    renderCalendar();
+                }
+            } else if (touchXs < touchXm && touchXm - touchXs >= minSwipe) {
+                if (Math.abs(touchXs - touchXm) > Math.abs(touchYs - touchYm)) {
+                    move = 'right';
+                    date.setMonth(date.getMonth() + 1);
+                    renderCalendar();
+                }
+            }
+
+            container.removeEventListener('touchmove', funTouchMove, false);
+            container.removeEventListener('touchend', funTouchEnd, false);
+
+            console.log(move);
+
+        }
+
+    }
+
+}
 
