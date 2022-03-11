@@ -20,7 +20,7 @@ html{
 }
 @media (max-width:350px){
     html{
-        font-size: 35%;
+        font-size: 30%;
     }
 }
 @media (max-width:300px){

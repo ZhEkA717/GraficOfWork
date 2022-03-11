@@ -30,18 +30,18 @@ const renderCalendar = () => {
             'Суббота'
         ],
         fons = {
-            jan: "../imgs/jan.jpg",
-            feb: "../imgs/feb.jpg",
+            jan: "imgs/jan.jpg",
+            feb: "imgs/feb.jpg",
             mart: "imgs/mart.jpg",
-            apr: "../imgs/apr.jpg",
-            may: "../imgs/may.jpg",
-            jn: "../imgs/jn.jpg",
-            jl: "../imgs/jl.jpg",
-            agt: "../imgs/agt.jpg",
-            sept: "../imgs/sept.jpg",
-            oct: "../imgs/oct.jpg",
-            nov: "../imgs/nov.jpg",
-            dec: "../imgs/dec.jpg"
+            apr: "imgs/apr.jpg",
+            may: "imgs/may.jpg",
+            jn: "imgs/jn.jpg",
+            jl: "imgs/jl.jpg",
+            agt: "imgs/agt.jpg",
+            sept: "imgs/sept.jpg",
+            oct: "imgs/oct.jpg",
+            nov: "imgs/nov.jpg",
+            dec: "imgs/dec.jpg"
         }
 
 
@@ -215,25 +215,27 @@ function funTouchStart(EO) {
             if (touchXs > touchXm && touchXs - touchXm >= minSwipe) {
                 if (Math.abs(touchXs - touchXm) > Math.abs(touchYs - touchYm)) {
                     move = 'left';
-                    date.setMonth(date.getMonth() - 1);
-                    renderCalendar();
                 }
             } else if (touchXs < touchXm && touchXm - touchXs >= minSwipe) {
                 if (Math.abs(touchXs - touchXm) > Math.abs(touchYs - touchYm)) {
                     move = 'right';
-                    date.setMonth(date.getMonth() + 1);
-                    renderCalendar();
                 }
             }
 
             container.removeEventListener('touchmove', funTouchMove, false);
             container.removeEventListener('touchend', funTouchEnd, false);
 
-            console.log(move);
-
+           
         }
 
     }
-
 }
 
+// if (move == "left") {
+//     date.setMonth(date.getMonth() + 1);
+//     renderCalendar();
+//     console.log('sdfsd');
+// } else if (move == "right") {
+//     date.setMonth(date.getMonth() - 1);
+//     renderCalendar();
+// }
