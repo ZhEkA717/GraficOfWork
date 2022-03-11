@@ -185,6 +185,24 @@ document.querySelector(".days").addEventListener('click', (EO) => {
 
 // swipe--------------------------------
 
+function debounceSerie(func, interval, immediate) {
+    var timer;
+    return function () {
+        var context = this,
+            args = arguments;
+        var later = function () {
+            timer = null;
+            if (!immediate)
+                func.apply(context, args);
+        };
+        var callNow = immediate && !timer;
+        clearTimeout(timer);
+        timer = setTimeout(later, interval);
+        if (callNow)
+            func.apply(context, args);
+    };
+};
+
 var container = document.querySelector('.container');
 container.addEventListener('touchstart', funTouchStart, false);
 let move = "stop"
@@ -195,47 +213,44 @@ function funTouchStart(EO) {
     var touchXs = touchInfoStart.pageX;
     var touchYs = touchInfoStart.pageY;
 
-    container.addEventListener('touchmove', funTouchMove, false);
+    container.addEventListener('touchmove', debounceSerie(funTouchMove, 500, false), false);
 
     function funTouchMove(EO) {
         EO = EO || window.event;
         EO.preventDefault();
-        container.addEventListener('touchend', funTouchEnd, false);
         var touchInfoMove = EO.targetTouches[0];
         var touchX1 = touchInfoMove.pageX;
         var touchY1 = touchInfoMove.pageY;
-        function funTouchEnd(EO) {
-            EO = EO || window.event;
-            EO.preventDefault();
-            var touchXm = touchX1;
-            var touchYm = touchY1;
+        var touchXm = touchX1;
+        var touchYm = touchY1;
 
-            var minSwipe = 20;
+        var minSwipe = 20;
 
-            if (touchXs > touchXm && touchXs - touchXm >= minSwipe) {
-                if (Math.abs(touchXs - touchXm) > Math.abs(touchYs - touchYm)) {
-                    move = 'left';
-                }
-            } else if (touchXs < touchXm && touchXm - touchXs >= minSwipe) {
-                if (Math.abs(touchXs - touchXm) > Math.abs(touchYs - touchYm)) {
-                    move = 'right';
-                }
+        if (touchXs > touchXm && touchXs - touchXm >= minSwipe) {
+            if (Math.abs(touchXs - touchXm) > Math.abs(touchYs - touchYm)) {
+                move = 'left';
             }
-
-            container.removeEventListener('touchmove', funTouchMove, false);
-            container.removeEventListener('touchend', funTouchEnd, false);
-
-           
+        } else if (touchXs < touchXm && touchXm - touchXs >= minSwipe) {
+            if (Math.abs(touchXs - touchXm) > Math.abs(touchYs - touchYm)) {
+                move = 'right';
+            }
         }
-
     }
+    container.removeEventListener('touchmove', funTouchMove, false);
+}
+container.addEventListener('touchend', funTouchEnd, false);
+function funTouchEnd(EO) {
+    EO = EO || window.event;
+    EO.preventDefault();
+
+    if (move == "left") {
+        date.setMonth(date.getMonth() - 1);
+        renderCalendar();
+    } else if (move == "right") {
+        date.setMonth(date.getMonth() + 1);
+        renderCalendar();
+    }
+    console.log(move);
 }
 
-// if (move == "left") {
-//     date.setMonth(date.getMonth() + 1);
-//     renderCalendar();
-//     console.log('sdfsd');
-// } else if (move == "right") {
-//     date.setMonth(date.getMonth() - 1);
-//     renderCalendar();
-// }
+
