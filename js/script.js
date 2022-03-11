@@ -32,7 +32,7 @@ const renderCalendar = () => {
         fons = {
             jan: "../imgs/jan.jpg",
             feb: "../imgs/feb.jpg",
-            mart: "../imgs/mart.jpg",
+            mart: "imgs/mart.jpg",
             apr: "../imgs/apr.jpg",
             may: "../imgs/may.jpg",
             jn: "../imgs/jn.jpg",
