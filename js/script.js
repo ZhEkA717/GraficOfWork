@@ -1,6 +1,7 @@
 "use strict";
 
-const date = new Date();
+document.addEventListener('DOMContentLoaded',()=>{
+    const date = new Date();
 
 const renderCalendar = () => {
     const monthDays = document.querySelector(".days"),
@@ -260,4 +261,5 @@ function funTouchEnd(EO) {
     move="stop";
 }
 
+});
 

@@ -33,6 +33,11 @@ html{
         font-size: 25%;
     }
 }
+@media (max-height:300px){
+    html{
+        font-size: 25%;
+    }
+}
 
 
 
