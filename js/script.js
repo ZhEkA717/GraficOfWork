@@ -138,24 +138,18 @@ document.addEventListener('DOMContentLoaded', () => {
         const divArray2 = document.querySelectorAll(".days2 div");
         const divArray3 = document.querySelectorAll(".days3 div");
 
-        divArray1.forEach((item, i) => {
-            if (i == 5 || i == 6 || i == 12 || i == 13 || i == 19
-                || i == 20 || i == 26 || i == 27 || i == 33 || i == 34) {
-                item.style.color = "rgba(255,0,0,0.8)";
-            }
-        });
-        divArray2.forEach((item, i) => {
-            if (i == 5 || i == 6 || i == 12 || i == 13 || i == 19
-                || i == 20 || i == 26 || i == 27 || i == 33 || i == 34) {
-                item.style.color = "rgba(255,0,0,0.8)";
-            }
-        });
-        divArray3.forEach((item, i) => {
-            if (i == 5 || i == 6 || i == 12 || i == 13 || i == 19
-                || i == 20 || i == 26 || i == 27 || i == 33 || i == 34) {
-                item.style.color = "rgba(255,0,0,0.8)";
-            }
-        });
+        function coloredW(div){
+            div.forEach((item, i) => {
+                if (i == 5 || i == 6 || i == 12 || i == 13 || i == 19
+                    || i == 20 || i == 26 || i == 27 || i == 33 || i == 34) {
+                    item.style.color = "rgba(255,0,0,0.8)";
+                }
+            });
+        }
+        coloredW(divArray1);
+        coloredW(divArray2);
+        coloredW(divArray3);
+    
 
     }
 
@@ -263,12 +257,12 @@ document.addEventListener('DOMContentLoaded', () => {
         if (move == "left") {
             date.setMonth(date.getMonth() + 1);
             renderCalendar();
-            index <= 0 ? false : index--;
+            index >= slides.length - 1 ? false : index++;
             slider();
         } else if (move == "right") {
             date.setMonth(date.getMonth() - 1);
             renderCalendar();
-            index >= slides.length - 1 ? false : index++;
+            index <= 0 ? false : index--;
             slider();
         }
         move = "stop";
