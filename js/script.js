@@ -2,7 +2,10 @@
 
 document.addEventListener('DOMContentLoaded', () => {
     const date = new Date();
-
+    const audioClick = new Audio();
+    const audioSlyde = new Audio();
+    audioClick.src = "/audio/click.mp3";
+    audioSlyde.src = "/audio/slyde.mp3";
     const renderCalendar = () => {
         const monthDays1 = document.querySelector(".days1"),
             monthDays2 = document.querySelector(".days2"),
@@ -48,6 +51,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
 
+
         document.querySelector(".date h1").innerHTML
             = `${months[date.getMonth()]} ${date.getFullYear()}`;
 
@@ -82,16 +86,16 @@ document.addEventListener('DOMContentLoaded', () => {
             default:
                 break;
         }
-            if(window.screen.width<900){
+        if (window.screen.width < 900) {
+            container.style.backgroundSize = `auto ${window.screen.availHeight}px`
+        }
+        window.addEventListener("resize", funResize)
+        function funResize() {
+            if (window.screen.width < 900) {
                 container.style.backgroundSize = `auto ${window.screen.availHeight}px`
             }
-            window.addEventListener("resize",funResize)
-            function funResize (){
-                if(window.screen.width<900){
-                    container.style.backgroundSize = `auto ${window.screen.availHeight}px`
-                }
-            }
-        
+        }
+
         updateTime();
         function updateTime() {
             var currTime = new Date();
@@ -168,29 +172,38 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     }
+    function ckickAudioPlay(){
+        audioClick.currentTime = 0;
+        audioClick.volume = 1;
+        audioClick.play();
+    }
     document.querySelector(".prev").addEventListener('click', () => {
         date.setMonth(date.getMonth() - 1);
         renderCalendar();
         index <= 0 ? false : index--;
         slider();
+        ckickAudioPlay();
     });
     document.querySelector('.next').addEventListener('click', () => {
         date.setMonth(date.getMonth() + 1);
         renderCalendar();
         index >= slides.length - 1 ? false : index++;
         slider();
+        ckickAudioPlay();
     });
     document.querySelector(".prev").addEventListener('touchend', () => {
         date.setMonth(date.getMonth() - 1);
         renderCalendar();
         index <= 0 ? false : index--;
         slider();
+        ckickAudioPlay();
     });
     document.querySelector('.next').addEventListener('touchend', () => {
         date.setMonth(date.getMonth() + 1);
         renderCalendar();
         index >= slides.length - 1 ? false : index++;
         slider();
+        ckickAudioPlay();
     });
 
     document.addEventListener('keydown', (EO) => {
@@ -272,19 +285,25 @@ document.addEventListener('DOMContentLoaded', () => {
             renderCalendar();
             index >= slides.length - 1 ? false : index++;
             slider();
+            audioSlyde.play();
         } else if (move == "right") {
             date.setMonth(date.getMonth() - 1);
             renderCalendar();
             index <= 0 ? false : index--;
             slider();
+            audioSlyde.currentTime=0;
+            audioSlyde.play();
         }
         move = "stop";
     }
 
-});
+    document.getElementById('refresh').addEventListener('click', () => {
+        audioClick.currentTime = 0;
+        audioClick.volume = 1;
+        audioClick.play();
+        location.reload();
+    });
 
-document.getElementById('refresh').addEventListener('click', () => {
-    location.reload();
 });
 
 const d = document;
@@ -319,7 +338,6 @@ slidesBox.addEventListener('transitionend', () => {
         index = slides.length - 2;
         slidesBox.style.transition = "none";
         slidesBox.style.transform = "translateX(" + (-index * slidesBox.offsetWidth) + "px)";
-
     }
 });
 
