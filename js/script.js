@@ -4,8 +4,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const date = new Date();
     const audioClick = new Audio();
     const audioSlyde = new Audio();
-    audioClick.src = "/audio/click.mp3";
-    audioSlyde.src = "/audio/slyde.mp3";
+    audioClick.src = "audio/click.mp3";
+    audioSlyde.src = "audio/slyde.mp3";
     const renderCalendar = () => {
         const monthDays1 = document.querySelector(".days1"),
             monthDays2 = document.querySelector(".days2"),
