@@ -152,12 +152,12 @@ document.querySelector('.next').addEventListener('click', () => {
     renderCalendar();
 });
 document.querySelector(".prev").addEventListener('touchend', () => {
-    window.navigator.vibrate(100);
+    navigator.vibrate(100);
     date.setMonth(date.getMonth() - 1);
     renderCalendar();
 });
 document.querySelector('.next').addEventListener('touchend', () => {
-    window.navigator.vibrate(100);
+    navigator.vibrate(100);
     date.setMonth(date.getMonth() + 1);
     renderCalendar();
 });
@@ -267,6 +267,6 @@ function funTouchEnd(EO) {
 });
 
 document.getElementById('refresh').addEventListener('click',()=>{
-    window.navigator.vibrate(100);
+    navigator.vibrate(100);
     location.reload();
 });
