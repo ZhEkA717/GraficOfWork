@@ -297,11 +297,14 @@ document.addEventListener('DOMContentLoaded', () => {
         move = "stop";
     }
 
-    document.getElementById('refresh').addEventListener('click', () => {
+    document.getElementById('refresh').addEventListener('click', (EO) => {
+        EO.target.src = "/imgs/close.png"
         audioClick.currentTime = 0;
         audioClick.volume = 1;
         audioClick.play();
-        location.reload();
+        setTimeout(()=>{
+            location.reload();
+        },500);
     });
 
 });
