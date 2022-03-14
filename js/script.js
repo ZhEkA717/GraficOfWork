@@ -82,7 +82,16 @@ document.addEventListener('DOMContentLoaded', () => {
             default:
                 break;
         }
-
+            if(window.screen.width<900){
+                container.style.backgroundSize = `auto ${window.screen.availHeight}px`
+            }
+            window.addEventListener("resize",funResize)
+            function funResize (){
+                if(window.screen.width<900){
+                    container.style.backgroundSize = `auto ${window.screen.availHeight}px`
+                }
+            }
+        
         updateTime();
         function updateTime() {
             var currTime = new Date();
@@ -138,7 +147,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const divArray2 = document.querySelectorAll(".days2 div");
         const divArray3 = document.querySelectorAll(".days3 div");
 
-        function coloredW(div){
+        function coloredW(div) {
             div.forEach((item, i) => {
                 if (i == 5 || i == 6 || i == 12 || i == 13 || i == 19
                     || i == 20 || i == 26 || i == 27 || i == 33 || i == 34) {
@@ -146,15 +155,19 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             });
         }
+
         coloredW(divArray1);
         coloredW(divArray2);
         coloredW(divArray3);
-    
+
+        slidesBox.addEventListener("transitionstart", () => {
+            coloredW(divArray1);
+            coloredW(divArray2);
+            coloredW(divArray3);
+        });
+
 
     }
-
-
-
     document.querySelector(".prev").addEventListener('click', () => {
         date.setMonth(date.getMonth() - 1);
         renderCalendar();
