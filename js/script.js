@@ -152,12 +152,10 @@ document.querySelector('.next').addEventListener('click', () => {
     renderCalendar();
 });
 document.querySelector(".prev").addEventListener('touchend', () => {
-    navigator.vibrate(100);
     date.setMonth(date.getMonth() - 1);
     renderCalendar();
 });
 document.querySelector('.next').addEventListener('touchend', () => {
-    navigator.vibrate(100);
     date.setMonth(date.getMonth() + 1);
     renderCalendar();
 });
@@ -267,6 +265,5 @@ function funTouchEnd(EO) {
 });
 
 document.getElementById('refresh').addEventListener('click',()=>{
-    navigator.vibrate(100);
     location.reload();
 });
