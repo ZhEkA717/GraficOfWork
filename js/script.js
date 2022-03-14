@@ -152,12 +152,12 @@ document.querySelector('.next').addEventListener('click', () => {
     renderCalendar();
 });
 document.querySelector(".prev").addEventListener('touchend', () => {
-    vibro(true);
+    window.navigator.vibrate(100);
     date.setMonth(date.getMonth() - 1);
     renderCalendar();
 });
 document.querySelector('.next').addEventListener('touchend', () => {
-    vibro(true);
+    window.navigator.vibrate(100);
     date.setMonth(date.getMonth() + 1);
     renderCalendar();
 });
@@ -255,11 +255,11 @@ function funTouchEnd(EO) {
     // EO.preventDefault();
 
     if (move == "left") {
-        vibro(true);
+        window.navigator.vibrate(100);
         date.setMonth(date.getMonth() + 1);
         renderCalendar();
     } else if (move == "right") {
-        vibro(true);
+        window.navigator.vibrate(100);
         date.setMonth(date.getMonth() - 1);
         renderCalendar();
     }
@@ -269,15 +269,7 @@ function funTouchEnd(EO) {
 });
 
 document.getElementById('refresh').addEventListener('click',()=>{
-    vibro(true);
+    window.navigator.vibrate(100);
     location.reload();
 });
 
-function vibro(longFlag) {
-    if ( navigator.vibrate ) { // есть поддержка Vibration API?
-        if ( !longFlag )
-            window.navigator.vibrate(100); // вибрация 100мс
-        else
-            window.navigator.vibrate([100,50,100,50,100]); // вибрация 3 раза по 100мс с паузами 50мс
-    }
-}
