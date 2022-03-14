@@ -152,12 +152,10 @@ document.querySelector('.next').addEventListener('click', () => {
     renderCalendar();
 });
 document.querySelector(".prev").addEventListener('touchend', () => {
-    window.navigator.vibrate(100);
     date.setMonth(date.getMonth() - 1);
     renderCalendar();
 });
 document.querySelector('.next').addEventListener('touchend', () => {
-    window.navigator.vibrate(100);
     date.setMonth(date.getMonth() + 1);
     renderCalendar();
 });
@@ -196,27 +194,27 @@ document.querySelector(".days").addEventListener('click', (EO) => {
 
 // swipe--------------------------------
 
-function debounceSerie(func, interval, immediate) {
-    var timer;
-    return function () {
-        var context = this,
-            args = arguments;
-        var later = function () {
-            timer = null;
-            if (!immediate)
-                func.apply(context, args);
-        };
-        var callNow = immediate && !timer;
-        clearTimeout(timer);
-        timer = setTimeout(later, interval);
-        if (callNow)
-            func.apply(context, args);
-    };
-};
+// function debounceSerie(func, interval, immediate) {
+//     var timer;
+//     return function () {
+//         var context = this,
+//             args = arguments;
+//         var later = function () {
+//             timer = null;
+//             if (!immediate)
+//                 func.apply(context, args);
+//         };
+//         var callNow = immediate && !timer;
+//         clearTimeout(timer);
+//         timer = setTimeout(later, interval);
+//         if (callNow)
+//             func.apply(context, args);
+//     };
+// };
 
 var container = document.querySelector('.container');
 container.addEventListener('touchstart', funTouchStart, false);
-let move = "stop"
+let move = "stop";
 function funTouchStart(EO) {
     EO = EO || window.event;
     EO.preventDefault();
@@ -224,8 +222,7 @@ function funTouchStart(EO) {
     var touchXs = touchInfoStart.pageX;
     var touchYs = touchInfoStart.pageY;
 
-    container.addEventListener('touchmove', debounceSerie(funTouchMove, 500, false), false);
-
+    container.addEventListener('touchmove', funTouchMove);
     function funTouchMove(EO) {
         EO = EO || window.event;
         EO.preventDefault();
@@ -236,7 +233,7 @@ function funTouchStart(EO) {
         var touchYm = touchY1;
 
         var minSwipe = 20;
-
+        
         if (touchXs > touchXm && touchXs - touchXm >= minSwipe) {
             if (Math.abs(touchXs - touchXm) > Math.abs(touchYs - touchYm)) {
                 move = 'left';
@@ -247,19 +244,18 @@ function funTouchStart(EO) {
             }
         }
     }
-    container.removeEventListener('touchmove', funTouchMove, false);
+    setTimeout(()=>{
+        container.removeEventListener('touchmove', funTouchMove, false);
+    },500); 
 }
 container.addEventListener('touchend', funTouchEnd, false);
 function funTouchEnd(EO) {
     EO = EO || window.event;
     // EO.preventDefault();
-
     if (move == "left") {
-        window.navigator.vibrate(100);
         date.setMonth(date.getMonth() + 1);
         renderCalendar();
     } else if (move == "right") {
-        window.navigator.vibrate(100);
         date.setMonth(date.getMonth() - 1);
         renderCalendar();
     }
@@ -269,7 +265,5 @@ function funTouchEnd(EO) {
 });
 
 document.getElementById('refresh').addEventListener('click',()=>{
-    window.navigator.vibrate(100);
     location.reload();
 });
-
