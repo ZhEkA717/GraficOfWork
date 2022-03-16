@@ -295,9 +295,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.getElementById('refresh').addEventListener('click', (EO) => {
         EO.target.src = "imgs/close.png"
-        audioClick.currentTime = 0;
-        audioClick.volume = 1;
-        audioClick.play();
         setTimeout(()=>{
             location.reload();
         },500);
