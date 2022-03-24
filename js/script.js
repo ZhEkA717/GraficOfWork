@@ -134,7 +134,7 @@ document.addEventListener('DOMContentLoaded', () => {
         for (let i = 1; i <= lastDay; i++) {
             if (i === new Date().getDate() &&
                 date.getMonth() === new Date().getMonth()) {
-                days += `<div class = "today">${i}</div>`;
+                days += `<div class = "today num">${i}</div>`;
             } else {
                 days += `<div class = "num">${i}</div>`;
             }
@@ -166,40 +166,35 @@ document.addEventListener('DOMContentLoaded', () => {
             coloredW(divArray3);
         });
 
-
     }
-    function ckickAudioPlay(){
-        audioClick.currentTime = 0;
-        audioClick.volume = 1;
-        audioClick.play();
-    }
+  
     document.querySelector(".prev").addEventListener('click', () => {
         date.setMonth(date.getMonth() - 1);
         renderCalendar();
         index <= 0 ? false : index--;
         slider();
-        ckickAudioPlay();
+        restoreInfo();
     });
     document.querySelector('.next').addEventListener('click', () => {
         date.setMonth(date.getMonth() + 1);
         renderCalendar();
         index >= slides.length - 1 ? false : index++;
         slider();
-        ckickAudioPlay();
+        restoreInfo();
     });
     document.querySelector(".prev").addEventListener('touchend', () => {
         date.setMonth(date.getMonth() - 1);
         renderCalendar();
         index <= 0 ? false : index--;
         slider();
-        ckickAudioPlay();
+        restoreInfo();
     });
     document.querySelector('.next').addEventListener('touchend', () => {
         date.setMonth(date.getMonth() + 1);
         renderCalendar();
         index >= slides.length - 1 ? false : index++;
         slider();
-        ckickAudioPlay();
+        restoreInfo();
     });
 
     document.addEventListener('keydown', (EO) => {
@@ -208,6 +203,7 @@ document.addEventListener('DOMContentLoaded', () => {
             renderCalendar();
             index <= 0 ? false : index--;
             slider();
+            restoreInfo();
         }
     });
     document.addEventListener('keydown', (EO) => {
@@ -216,24 +212,189 @@ document.addEventListener('DOMContentLoaded', () => {
             renderCalendar();
             index >= slides.length - 1 ? false : index++;
             slider();
+            restoreInfo();
         }
     });
 
     renderCalendar();
 
-    document.querySelector(".days").addEventListener('click', (EO) => {
-        EO.preventDefault();
-        let el = EO.target;
-        console.log(el.classList);
-        if ((el.classList.value === "num" || el.classList[0] === "today")
-            && el.childNodes.length < 3) {
-            el.innerHTML += `<span class ="star">*</span>`;
-        } else if ((el.classList.value === "num" || el.classList.value === "today")
-            && el.childNodes.length == 3) {
-            el.innerHTML = el.childNodes[0].data;
-        }
-    });
+    var ajaxHandlerScript="https://fe.it-academy.by/AjaxStringStorage2.php";
+    var updatePassword;
+    var stringName='GRUSHEVSKIY_CALENDAR_STORAGE';
 
+    function storeInfo() {
+        updatePassword=Math.random();
+        $.ajax( {
+                url : ajaxHandlerScript,
+                type : 'POST',
+                cache : false,
+                dataType:'JSON',
+                data : { f : 'LOCKGET', n : stringName, p : updatePassword },
+                success : lockGetReady,
+                error : errorHandler
+            }
+        );
+    }
+
+    function lockGetReady(callresult) {
+        if ( callresult.error!=undefined )
+            alert(callresult.error);
+        else {
+            let daysCurrMonth = document.querySelector(".days2");
+            var info=escapeHTML(daysCurrMonth.innerHTML);
+            function escapeHTML(text) {
+                if ( !text )
+                    return text;
+                text=text.toString()
+                    .split("&").join("&amp;")
+                    .split("<").join("&lt;")
+                    .split(">").join("&gt;")
+                    .split('"').join("&quot;")
+                    .split("'").join("&#039;");
+                return text;
+            }
+            $.ajax( {
+                    url : ajaxHandlerScript,
+                    type : 'POST',
+                    cache : false,
+                    dataType:'JSON',
+                    data : { f : 'UPDATE', n : stringName, v : JSON.stringify(info), p : updatePassword },
+                    success : updateReady,
+                    error : errorHandler
+                }
+            );
+        }
+    }
+    
+    function updateReady(callresult) {
+        if ( callresult.error!=undefined )
+            alert(callresult.error);
+            restoreInfo();
+    }
+
+    function restoreInfo() {
+        $.ajax(
+            {
+                url : ajaxHandlerScript,
+                type : 'POST',
+                cache : false,
+                dataType:'json',
+                data : { f : 'READ', n : stringName },
+                success : readReady,
+                error : errorHandler
+            }
+        );
+    }
+    
+    function readReady(callresult) {
+        if ( callresult.error!=undefined )
+            alert(callresult.error);
+        else if ( callresult.result!="" ) {
+            var info=JSON.parse(callresult.result);
+            let daysCurrMonth = document.querySelector(".days2");
+            daysCurrMonth.innerHTML = escapeHTML(info);
+            function escapeHTML(text) {
+                if ( !text )
+                    return text;
+                text=text.toString()
+                    .split("&amp;").join("&")
+                    .split("&lt;").join("<")
+                    .split("&gt;").join(">")
+                    .split('&quot;').join('"')
+                    .split("&#039;").join("'");
+                return text;
+            }
+
+            let numArray = document.querySelectorAll(".days2 .num");
+            numArray.forEach(item=>{
+                item.addEventListener('mousedown',fff );
+                item.addEventListener('touchstart',fff );
+
+                function fff(EO){
+                    let el = EO.target;
+                    let timerIdgreen = setTimeout(()=>{
+                        if(el.style.border){
+                            el.style.border = "";
+                        }else{
+                            el.style.border = "2px solid green";
+                        }
+                    },500);
+                    let timerIdblack = setTimeout(()=>{
+                        el.classList.remove("black");
+                        if(el.style.border){
+                            el.style.border = "";
+                        }else{
+                            el.style.border = "2px solid black";
+                        }
+                        
+
+                      
+                    },2000);
+                    item.addEventListener("mouseup",()=>{
+                        clearTimeout(timerIdgreen);
+                        clearTimeout(timerIdblack);
+                    });   
+                    item.addEventListener("touchend",()=>{
+                        clearTimeout(timerIdgreen);
+                        clearTimeout(timerIdblack);
+                    });  
+                     
+
+                    
+                }
+            
+            });
+            let greenClasses = document.querySelectorAll(".green");
+            let blackClasses = document.querySelectorAll(".black");
+            let colgreen=0;
+            let colblack=0;
+            greenClasses.forEach((item,i,arr)=>{
+                colgreen=arr.length;
+            })
+            blackClasses.forEach((item,i,arr)=>{
+                colblack = arr.length;
+            })
+
+            let zp = 800/12*colgreen +100*colblack;
+            document.getElementById("zp").innerHTML = `Зарплата: ${Math.round(zp)} Byn`;
+
+        }
+    }
+ 
+    function errorHandler(jqXHR,statusStr,errorStr) {
+        alert(statusStr+' '+errorStr);
+    }
+
+    restoreInfo();
+
+   
+
+    document.getElementById('download').addEventListener("click",debounceSerie(funSaveGrafic, 500, false));
+
+    function funSaveGrafic(){
+        let password = prompt("Введите пароль");
+        if(password = "unypyrebe"){
+            storeInfo();
+        }
+    }
+    function debounceSerie(func, interval, immediate) {
+        var timer;
+        return function () {
+            var context = this, args = arguments;
+            var later = function () {
+                timer = null;
+                if (!immediate)
+                    func.apply(context, args);
+            };
+            var callNow = immediate && !timer;
+            clearTimeout(timer);
+            timer = setTimeout(later, interval);
+            if (callNow)
+                func.apply(context, args);
+        };
+    };
+    
+   
     // swipe--------------------------------
 
     var container = document.querySelector('.container');
@@ -256,7 +417,7 @@ document.addEventListener('DOMContentLoaded', () => {
             var touchXm = touchX1;
             var touchYm = touchY1;
 
-            var minSwipe = 20;
+            var minSwipe = 40;
 
             if (touchXs > touchXm && touchXs - touchXm >= minSwipe) {
                 if (Math.abs(touchXs - touchXm) > Math.abs(touchYs - touchYm)) {
@@ -281,14 +442,11 @@ document.addEventListener('DOMContentLoaded', () => {
             renderCalendar();
             index >= slides.length - 1 ? false : index++;
             slider();
-            audioSlyde.play();
         } else if (move == "right") {
             date.setMonth(date.getMonth() - 1);
             renderCalendar();
             index <= 0 ? false : index--;
             slider();
-            audioSlyde.currentTime=0;
-            audioSlyde.play();
         }
         move = "stop";
     }
@@ -336,5 +494,4 @@ slidesBox.addEventListener('transitionend', () => {
         slidesBox.style.transform = "translateX(" + (-index * slidesBox.offsetWidth) + "px)";
     }
 });
-
 
