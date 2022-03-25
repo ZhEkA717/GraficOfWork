@@ -272,9 +272,7 @@ html{
     transform: translate(-50%,-50%);
 
 }
-.green,.orange{
-    position: relative;
-}
+
 .green:hover::after,
 .green:focus::after,
 .orange:hover::after,
@@ -282,7 +280,10 @@ html{
     content: attr(data-title);
     position: absolute; 
     z-index: 1; 
-    top: 0;   
-    right: 2px;
-    color: black;
+    bottom:-55px;   
+    left: 20px;
+    color: white;
+    letter-spacing: 2px;
+    text-shadow: 0 0.3rem 0.5rem rgba(0, 0, 0, 0.5);
+
 }

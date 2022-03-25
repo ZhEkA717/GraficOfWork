@@ -355,11 +355,11 @@ document.addEventListener('DOMContentLoaded', () => {
             let colwhite = 0;
             greenClasses.forEach((item, i, arr) => {
                 colgreen = arr.length;
-                item.setAttribute("data-title","8ч")
+                item.setAttribute("data-title","Рабочий день 8 часов")
             })
             blackClasses.forEach((item, i, arr) => {
                 colwhite = arr.length;
-                item.setAttribute("data-title","12ч")
+                item.setAttribute("data-title","Рабочий день 12 часов")
             })
 
             let zp = 800 / 12 * colgreen + 100 * colwhite;
