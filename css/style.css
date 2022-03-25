@@ -287,8 +287,8 @@ html{
     z-index: 1; 
     bottom:-55px;   
     left: 20px;
-    color: white;
+    color: #eee;
     letter-spacing: 1px;
     text-shadow: 0 0.3rem 0.5rem rgba(0, 0, 0, 0.5);
-
+    font-size: 15px;
 }
