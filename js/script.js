@@ -346,8 +346,13 @@ document.addEventListener('DOMContentLoaded', () => {
             })
 
             let zp = 800/12*colgreen +100*colblack;
-            document.getElementById("zp").innerHTML = `Salary: ${Math.round(zp)} Byn`;
-
+            const divZp = document.getElementById("zp");
+            divZp.innerHTML = `Salary: ${Math.round(zp)} Byn`;
+            console.log(calendar.offsetHeight);
+            divZp.style.top = 
+            (calendar.offsetTop + calendar.offsetHeight - divZp.offsetHeight)+"px";
+            divZp.style.left = 
+            (calendar.offsetLeft + calendar.offsetWidth -divZp.offsetWidth)+"px";
         }
     }
  
