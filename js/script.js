@@ -1,6 +1,12 @@
 "use strict";
 
 document.addEventListener('DOMContentLoaded', () => {
+
+    // const spinnerLoading = document.getElementById("loading");
+    const spinner =document.querySelector("#loading img");
+    // spinnerLoading.style.top = 
+    // (calendar.offsetTop +calendar.offsetHeight-spinnerLoading.offsetHeight)+ "px";
+
     const date = new Date();
     const renderCalendar = () => {
         const monthDays1 = document.querySelector(".days1"),
@@ -167,7 +173,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
     }
-  
+
     document.querySelector(".prev").addEventListener('click', () => {
         date.setMonth(date.getMonth() - 1);
         renderCalendar();
@@ -218,34 +224,34 @@ document.addEventListener('DOMContentLoaded', () => {
 
     renderCalendar();
 
-    var ajaxHandlerScript="https://fe.it-academy.by/AjaxStringStorage2.php";
+    var ajaxHandlerScript = "https://fe.it-academy.by/AjaxStringStorage2.php";
     var updatePassword;
-    var stringName='GRUSHEVSKIY_CALENDAR_STORAGE';
+    var stringName = 'GRUSHEVSKIY_CALENDAR_STORAGE';
 
     function storeInfo() {
-        updatePassword=Math.random();
-        $.ajax( {
-                url : ajaxHandlerScript,
-                type : 'POST',
-                cache : false,
-                dataType:'JSON',
-                data : { f : 'LOCKGET', n : stringName, p : updatePassword },
-                success : lockGetReady,
-                error : errorHandler
-            }
+        updatePassword = Math.random();
+        $.ajax({
+            url: ajaxHandlerScript,
+            type: 'POST',
+            cache: false,
+            dataType: 'JSON',
+            data: { f: 'LOCKGET', n: stringName, p: updatePassword },
+            success: lockGetReady,
+            error: errorHandler
+        }
         );
     }
 
     function lockGetReady(callresult) {
-        if ( callresult.error!=undefined )
+        if (callresult.error != undefined)
             alert(callresult.error);
         else {
             let daysCurrMonth = document.querySelector(".days2");
-            var info=escapeHTML(daysCurrMonth.innerHTML);
+            var info = escapeHTML(daysCurrMonth.innerHTML);
             function escapeHTML(text) {
-                if ( !text )
+                if (!text)
                     return text;
-                text=text.toString()
+                text = text.toString()
                     .split("&").join("&amp;")
                     .split("<").join("&lt;")
                     .split(">").join("&gt;")
@@ -253,50 +259,53 @@ document.addEventListener('DOMContentLoaded', () => {
                     .split("'").join("&#039;");
                 return text;
             }
-            $.ajax( {
-                    url : ajaxHandlerScript,
-                    type : 'POST',
-                    cache : false,
-                    dataType:'JSON',
-                    data : { f : 'UPDATE', n : stringName, v : JSON.stringify(info), p : updatePassword },
-                    success : updateReady,
-                    error : errorHandler
-                }
+            $.ajax({
+                url: ajaxHandlerScript,
+                type: 'POST',
+                cache: false,
+                dataType: 'JSON',
+                data: { f: 'UPDATE', n: stringName, v: JSON.stringify(info), p: updatePassword },
+                success: updateReady,
+                error: errorHandler
+            }
             );
         }
     }
-    
+
     function updateReady(callresult) {
-        if ( callresult.error!=undefined )
+        if (callresult.error != undefined)
             alert(callresult.error);
-            restoreInfo();
+        restoreInfo();
+        setTimeout(()=>{
+            spinner.src = "";
+        },500);
     }
 
     function restoreInfo() {
         $.ajax(
             {
-                url : ajaxHandlerScript,
-                type : 'POST',
-                cache : false,
-                dataType:'json',
-                data : { f : 'READ', n : stringName },
-                success : readReady,
-                error : errorHandler
+                url: ajaxHandlerScript,
+                type: 'POST',
+                cache: false,
+                dataType: 'json',
+                data: { f: 'READ', n: stringName },
+                success: readReady,
+                error: errorHandler
             }
         );
     }
-    
+
     function readReady(callresult) {
-        if ( callresult.error!=undefined )
+        if (callresult.error != undefined)
             alert(callresult.error);
-        else if ( callresult.result!="" ) {
-            var info=JSON.parse(callresult.result);
+        else if (callresult.result != "") {
+            var info = JSON.parse(callresult.result);
             let daysCurrMonth = document.querySelector(".days2");
             daysCurrMonth.innerHTML = escapeHTML(info);
             function escapeHTML(text) {
-                if ( !text )
+                if (!text)
                     return text;
-                text=text.toString()
+                text = text.toString()
                     .split("&amp;").join("&")
                     .split("&lt;").join("<")
                     .split("&gt;").join(">")
@@ -306,71 +315,112 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             let numArray = document.querySelectorAll(".days2 .num");
-            numArray.forEach(item=>{
-                item.addEventListener('mousedown',fff );
-                item.addEventListener('touchstart',fff );
+            numArray.forEach(item => {
+                item.addEventListener('mousedown', fff);
+                item.addEventListener('touchstart', fff);
 
-                function fff(EO){
+                function fff(EO) {
                     let el = EO.target;
-                    let timerId = setTimeout(()=>{
-                        if(!el.style.border){
+                    let timerId = setTimeout(() => {
+                        if (!el.style.border) {
                             el.style.border = "2px solid green";
                             el.classList.add("green")
-                        }else if(el.style.border == "2px solid green"){
+                        } else if (el.style.border == "2px solid green") {
                             el.style.border = "2px solid black";
                             el.classList.remove("green");
                             el.classList.add("black");
-                        }else if(el.style.border == "2px solid black"){
-                            el.style.border="";
+                        } else if (el.style.border == "2px solid black") {
+                            el.style.border = "2px solid orange";
                             el.classList.remove("black");
+                        } else if (el.style.border = "2px solid orange") {
+                            el.style.border = "";
                         }
-                    },500);
-                    item.addEventListener("mouseup",()=>{
+                    }, 500);
+                    item.addEventListener("mouseup", () => {
                         clearTimeout(timerId);
-                    });   
-                    item.addEventListener("touchend",()=>{
+                    });
+                    item.addEventListener("touchend", () => {
                         clearTimeout(timerId);
-                    });   
+                    });
                 }
-            
+
             });
             let greenClasses = document.querySelectorAll(".green");
             let blackClasses = document.querySelectorAll(".black");
-            let colgreen=0;
-            let colblack=0;
-            greenClasses.forEach((item,i,arr)=>{
-                colgreen=arr.length;
+            let colgreen = 0;
+            let colblack = 0;
+            greenClasses.forEach((item, i, arr) => {
+                colgreen = arr.length;
             })
-            blackClasses.forEach((item,i,arr)=>{
+            blackClasses.forEach((item, i, arr) => {
                 colblack = arr.length;
             })
 
-            let zp = 800/12*colgreen +100*colblack;
+            let zp = 800 / 12 * colgreen + 100 * colblack;
             const divZp = document.getElementById("zp");
             divZp.innerHTML = `Salary: ${Math.round(zp)} Byn`;
-            console.log(calendar.offsetHeight);
-            divZp.style.top = 
-            (calendar.offsetTop + calendar.offsetHeight - divZp.offsetHeight)+"px";
-            divZp.style.left = 
-            (calendar.offsetLeft + calendar.offsetWidth -divZp.offsetWidth)+"px";
+            divZp.style.top =
+                (calendar.offsetTop + calendar.offsetHeight - divZp.offsetHeight) + "px";
+            divZp.style.left =
+                (calendar.offsetLeft + calendar.offsetWidth - divZp.offsetWidth) + "px";
+            setTimeout(()=>{
+                spinner.src = "";
+            },500);
+                
         }
     }
- 
-    function errorHandler(jqXHR,statusStr,errorStr) {
-        alert(statusStr+' '+errorStr);
+
+    function errorHandler(jqXHR, statusStr, errorStr) {
+        spinner.src = "";
+        alert(statusStr + ' ' + errorStr);
     }
 
     restoreInfo();
 
 
-    document.getElementById('download').addEventListener("click",debounceSerie(funSaveGrafic, 500, false));
+    document.getElementById('download').addEventListener("click", funSaveGrafic);
+    const boxInput = document.querySelector("#boxInput input");
+    const boxPassword = document.getElementById("boxPassword");
+    const divClose = document.querySelector("#boxInput div");
+    const spanInput = document.querySelector("#boxInput span");
+    const pOK = document.querySelector("#boxInput p");
+    function funSaveGrafic() {
+        boxPassword.style.zIndex = 100;
+        boxPassword.style.opacity = 1;
+    }
+    divClose.addEventListener('click', fundivClose);
+    function fundivClose() {
 
-    function funSaveGrafic(){
-        let password = prompt("Введите пароль");
-        if(password == "unypyrebe"){
+        boxPassword.style.opacity = 0;
+        setTimeout(() => {
+            boxInput.value = "";
+            boxPassword.style.zIndex = 0;
+            boxInput.style.display = 'block';
+            pOK.style.display = "block";
+            spanInput.innerHTML = "Введите пароль:";
+        }, 500);
+
+    }
+    pOK.addEventListener("click", debounceSerie(funOkSave, 500, false));
+    document.addEventListener("keydown", debounceSerie(funOkSaveEnter, 500, false));
+
+    function funOkSave() {
+        if (boxInput.value == "unypyrebe") {
             storeInfo();
-        }else{
-            alert("Не верный пароль!")
+            spinner.src = "imgs/spinner.svg";
+            boxInput.value = "";
+            fundivClose();
+        } else {
+            spanInput.innerHTML = "Неверный пароль"
+            boxInput.value = "";
+            boxInput.style.display = 'none';
+            pOK.style.display = "none";
+        }
+    }
+    function funOkSaveEnter(EO){
+        EO=EO||window.event;
+        if(EO.code == "Enter" && boxInput.style.display =="block"){
+            funOkSave();
         }
     }
     function debounceSerie(func, interval, immediate) {
@@ -389,8 +439,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 func.apply(context, args);
         };
     };
-    
-   
+
+
     // swipe--------------------------------
 
     var container = document.querySelector('.container');
@@ -451,9 +501,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     document.getElementById('refresh').addEventListener('click', (EO) => {
         EO.target.src = "imgs/close.png"
-        setTimeout(()=>{
+        setTimeout(() => {
             location.reload();
-        },500);
+        }, 500);
     });
 
 });
@@ -492,4 +542,3 @@ slidesBox.addEventListener('transitionend', () => {
         slidesBox.style.transform = "translateX(" + (-index * slidesBox.offsetWidth) + "px)";
     }
 });
-
