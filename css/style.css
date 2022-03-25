@@ -272,3 +272,17 @@ html{
     transform: translate(-50%,-50%);
 
 }
+.green,.orange{
+    position: relative;
+}
+.green:hover::after,
+.green:focus::after,
+.orange:hover::after,
+.orange:focus::after{
+    content: attr(data-title);
+    position: absolute; 
+    z-index: 1; 
+    top: 0;   
+    right: 2px;
+    color: black;
+}

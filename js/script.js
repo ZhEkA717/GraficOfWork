@@ -355,9 +355,11 @@ document.addEventListener('DOMContentLoaded', () => {
             let colwhite = 0;
             greenClasses.forEach((item, i, arr) => {
                 colgreen = arr.length;
+                item.setAttribute("data-title","8ч")
             })
             blackClasses.forEach((item, i, arr) => {
                 colwhite = arr.length;
+                item.setAttribute("data-title","12ч")
             })
 
             let zp = 800 / 12 * colgreen + 100 * colwhite;
