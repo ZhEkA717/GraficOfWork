@@ -208,9 +208,9 @@ html{
     position: absolute;
     left: 15px;
     z-index: 10;
-    color: white;
+    color: #eee;
     font-size: 15px;
-    letter-spacing: 2px;
+    letter-spacing: 1px;
     padding-right: 10px;
     padding-bottom: 10px;
     text-shadow: 0 0.3rem 0.5rem rgba(0, 0, 0, 0.5);
@@ -229,7 +229,7 @@ html{
 }
 
 #boxInput{
-    width: 200px;
+    width: 250px;
     position: absolute;
     background-color: #167e56;
     top: 50%;
@@ -240,6 +240,11 @@ html{
     flex-direction: column;
     align-items: center;
     justify-content: space-around;
+}
+#boxInput input{
+   height: 30px;
+   border-radius: 5px;
+   background-color:#eee;
 }
 #boxInput div{
     position: absolute;
@@ -252,11 +257,11 @@ html{
 }
 
 #boxInput span,#boxInput p{
-    font-size: 15px;
-    color: white;
-    letter-spacing: 2px;
+    font-size: 20px;
+    color: #eee;
+    letter-spacing: 1px;
     text-shadow: 0 0.3rem 0.5rem rgba(0, 0, 0, 0.5);
-    padding: 10px;
+    padding: 20px;
 }
 
 #boxInput p:hover{
@@ -283,7 +288,7 @@ html{
     bottom:-55px;   
     left: 20px;
     color: white;
-    letter-spacing: 2px;
+    letter-spacing: 1px;
     text-shadow: 0 0.3rem 0.5rem rgba(0, 0, 0, 0.5);
 
 }
