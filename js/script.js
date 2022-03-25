@@ -2,11 +2,7 @@
 
 document.addEventListener('DOMContentLoaded', () => {
 
-    // const spinnerLoading = document.getElementById("loading");
     const spinner =document.querySelector("#loading img");
-    // spinnerLoading.style.top = 
-    // (calendar.offsetTop +calendar.offsetHeight-spinnerLoading.offsetHeight)+ "px";
-
     const date = new Date();
     const renderCalendar = () => {
         const monthDays1 = document.querySelector(".days1"),
@@ -277,7 +273,7 @@ document.addEventListener('DOMContentLoaded', () => {
             alert(callresult.error);
         restoreInfo();
         setTimeout(()=>{
-            spinner.src = "";
+            spinner.style.display="none";
         },500);
     }
 
@@ -326,12 +322,13 @@ document.addEventListener('DOMContentLoaded', () => {
                             el.style.border = "2px solid green";
                             el.classList.add("green")
                         } else if (el.style.border == "2px solid green") {
-                            el.style.border = "2px solid black";
+                            el.style.border = "2px solid white";
                             el.classList.remove("green");
-                            el.classList.add("black");
-                        } else if (el.style.border == "2px solid black") {
+                            el.classList.add("white");
+                        } else if (el.style.border == "2px solid white") {
                             el.style.border = "2px solid orange";
-                            el.classList.remove("black");
+                            el.style.borderRadius = "50%";
+                            el.classList.remove("white");
                         } else if (el.style.border = "2px solid orange") {
                             el.style.border = "";
                         }
@@ -346,17 +343,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
             });
             let greenClasses = document.querySelectorAll(".green");
-            let blackClasses = document.querySelectorAll(".black");
+            let blackClasses = document.querySelectorAll(".white");
             let colgreen = 0;
-            let colblack = 0;
+            let colwhite = 0;
             greenClasses.forEach((item, i, arr) => {
                 colgreen = arr.length;
             })
             blackClasses.forEach((item, i, arr) => {
-                colblack = arr.length;
+                colwhite = arr.length;
             })
 
-            let zp = 800 / 12 * colgreen + 100 * colblack;
+            let zp = 800 / 12 * colgreen + 100 * colwhite;
             const divZp = document.getElementById("zp");
             divZp.innerHTML = `Salary: ${Math.round(zp)} Byn`;
             divZp.style.top =
@@ -364,14 +361,14 @@ document.addEventListener('DOMContentLoaded', () => {
             divZp.style.left =
                 (calendar.offsetLeft + calendar.offsetWidth - divZp.offsetWidth) + "px";
             setTimeout(()=>{
-                spinner.src = "";
+                spinner.style.display = "none";
             },500);
                 
         }
     }
 
     function errorHandler(jqXHR, statusStr, errorStr) {
-        spinner.src = "";
+        spinner.style.display = "none";
         alert(statusStr + ' ' + errorStr);
     }
 
@@ -387,6 +384,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function funSaveGrafic() {
         boxPassword.style.zIndex = 100;
         boxPassword.style.opacity = 1;
+        boxInput.value = "";
     }
     divClose.addEventListener('click', fundivClose);
     function fundivClose() {
@@ -407,7 +405,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function funOkSave() {
         if (boxInput.value == "unypyrebe") {
             storeInfo();
-            spinner.src = "imgs/spinner.svg";
+            spinner.style.display="block";
             boxInput.value = "";
             fundivClose();
         } else {
@@ -482,7 +480,6 @@ document.addEventListener('DOMContentLoaded', () => {
     container.addEventListener('touchend', funTouchEnd, false);
     function funTouchEnd(EO) {
         EO = EO || window.event;
-        // EO.preventDefault();
         if (move == "left") {
             date.setMonth(date.getMonth() + 1);
             renderCalendar();
@@ -542,3 +539,4 @@ slidesBox.addEventListener('transitionend', () => {
         slidesBox.style.transform = "translateX(" + (-index * slidesBox.offsetWidth) + "px)";
     }
 });
+
