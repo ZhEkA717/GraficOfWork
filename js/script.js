@@ -355,11 +355,11 @@ document.addEventListener('DOMContentLoaded', () => {
             let colwhite = 0;
             greenClasses.forEach((item, i, arr) => {
                 colgreen = arr.length;
-                item.setAttribute("data-title","Рабочий день 8 часов")
+                item.setAttribute("data-title","Рабочий день 8 часов");
             })
             blackClasses.forEach((item, i, arr) => {
                 colwhite = arr.length;
-                item.setAttribute("data-title","Рабочий день 12 часов")
+                item.setAttribute("data-title","Рабочий день 12 часов");
             })
 
             let zp = 800 / 12 * colgreen + 100 * colwhite;
@@ -406,8 +406,14 @@ document.addEventListener('DOMContentLoaded', () => {
             pOK.style.display = "block";
             spanInput.innerHTML = "Введите пароль:";
         }, 500);
-
     }
+
+    boxPassword.addEventListener("click",(EO)=>{
+        if(EO.target.classList.contains("boxPassword")){
+            fundivClose();
+        }
+    });
+
     pOK.addEventListener("click", debounceSerie(funOkSave, 500, false));
     document.addEventListener("keydown", debounceSerie(funOkSaveEnter, 500, false));
 
