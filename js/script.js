@@ -312,35 +312,25 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 function fff(EO){
                     let el = EO.target;
-                    let timerIdgreen = setTimeout(()=>{
-                        if(el.style.border){
-                            el.style.border = "";
-                        }else{
+                    let timerId = setTimeout(()=>{
+                        if(!el.style.border){
                             el.style.border = "2px solid green";
+                            el.classList.add("green")
+                        }else if(el.style.border == "2px solid green"){
+                            el.style.border = "2px solid black";
+                            el.classList.remove("green");
+                            el.classList.add("black");
+                        }else if(el.style.border == "2px solid black"){
+                            el.style.border="";
+                            el.classList.remove("black");
                         }
                     },500);
-                    let timerIdblack = setTimeout(()=>{
-                        el.classList.remove("black");
-                        if(el.style.border){
-                            el.style.border = "";
-                        }else{
-                            el.style.border = "2px solid black";
-                        }
-                        
-
-                      
-                    },2000);
                     item.addEventListener("mouseup",()=>{
-                        clearTimeout(timerIdgreen);
-                        clearTimeout(timerIdblack);
+                        clearTimeout(timerId);
                     });   
                     item.addEventListener("touchend",()=>{
-                        clearTimeout(timerIdgreen);
-                        clearTimeout(timerIdblack);
-                    });  
-                     
-
-                    
+                        clearTimeout(timerId);
+                    });   
                 }
             
             });
@@ -356,7 +346,7 @@ document.addEventListener('DOMContentLoaded', () => {
             })
 
             let zp = 800/12*colgreen +100*colblack;
-            document.getElementById("zp").innerHTML = `Зарплата: ${Math.round(zp)} Byn`;
+            document.getElementById("zp").innerHTML = `Salary: ${Math.round(zp)} Byn`;
 
         }
     }
@@ -367,14 +357,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     restoreInfo();
 
-   
 
     document.getElementById('download').addEventListener("click",debounceSerie(funSaveGrafic, 500, false));
 
     function funSaveGrafic(){
         let password = prompt("Введите пароль");
-        if(password = "unypyrebe"){
+        if(password == "unypyrebe"){
             storeInfo();
+        }else{
+            alert("Не верный пароль!")
         }
     }
     function debounceSerie(func, interval, immediate) {
@@ -442,11 +433,13 @@ document.addEventListener('DOMContentLoaded', () => {
             renderCalendar();
             index >= slides.length - 1 ? false : index++;
             slider();
+            restoreInfo();
         } else if (move == "right") {
             date.setMonth(date.getMonth() - 1);
             renderCalendar();
             index <= 0 ? false : index--;
             slider();
+            restoreInfo();
         }
         move = "stop";
     }
