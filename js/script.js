@@ -170,33 +170,40 @@ document.addEventListener('DOMContentLoaded', () => {
 
     }
 
+    function updateMonthDays(){
+        if((new Date().getMonth()==date.getMonth()) && 
+        (new Date().getFullYear() ==date.getFullYear())){
+            restoreInfo();
+        }
+    }
+
     document.querySelector(".prev").addEventListener('click', () => {
         date.setMonth(date.getMonth() - 1);
         renderCalendar();
         index <= 0 ? false : index--;
         slider();
-        restoreInfo();
+        updateMonthDays();
     });
     document.querySelector('.next').addEventListener('click', () => {
         date.setMonth(date.getMonth() + 1);
         renderCalendar();
         index >= slides.length - 1 ? false : index++;
         slider();
-        restoreInfo();
+        updateMonthDays();
     });
     document.querySelector(".prev").addEventListener('touchend', () => {
         date.setMonth(date.getMonth() - 1);
         renderCalendar();
         index <= 0 ? false : index--;
         slider();
-        restoreInfo();
+        updateMonthDays();
     });
     document.querySelector('.next').addEventListener('touchend', () => {
         date.setMonth(date.getMonth() + 1);
         renderCalendar();
         index >= slides.length - 1 ? false : index++;
         slider();
-        restoreInfo();
+        updateMonthDays();
     });
 
     document.addEventListener('keydown', (EO) => {
@@ -205,7 +212,7 @@ document.addEventListener('DOMContentLoaded', () => {
             renderCalendar();
             index <= 0 ? false : index--;
             slider();
-            restoreInfo();
+            updateMonthDays();
         }
     });
     document.addEventListener('keydown', (EO) => {
@@ -214,7 +221,7 @@ document.addEventListener('DOMContentLoaded', () => {
             renderCalendar();
             index >= slides.length - 1 ? false : index++;
             slider();
-            restoreInfo();
+            updateMonthDays();
         }
     });
 
@@ -322,15 +329,15 @@ document.addEventListener('DOMContentLoaded', () => {
                             el.style.border = "2px solid green";
                             el.classList.add("green")
                         } else if (el.style.border == "2px solid green") {
-                            el.style.border = "2px solid white";
-                            el.classList.remove("green");
-                            el.classList.add("white");
-                        } else if (el.style.border == "2px solid white") {
                             el.style.border = "2px solid orange";
-                            el.style.borderRadius = "50%";
-                            el.classList.remove("white");
-                        } else if (el.style.border = "2px solid orange") {
+                            el.classList.remove("green");
+                            el.classList.add("orange");
+                        } else if (el.style.border == "2px solid orange") {
+                            el.style.border = "2px solid black";
+                            el.classList.remove("orange");
+                        } else if (el.style.border = "2px solid black") {
                             el.style.border = "";
+                            el.style.borderRadius = "";
                         }
                     }, 500);
                     item.addEventListener("mouseup", () => {
@@ -343,7 +350,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             });
             let greenClasses = document.querySelectorAll(".green");
-            let blackClasses = document.querySelectorAll(".white");
+            let blackClasses = document.querySelectorAll(".orange");
             let colgreen = 0;
             let colwhite = 0;
             greenClasses.forEach((item, i, arr) => {
@@ -373,7 +380,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     restoreInfo();
-
+    
 
     document.getElementById('download').addEventListener("click", funSaveGrafic);
     const boxInput = document.querySelector("#boxInput input");
@@ -421,6 +428,7 @@ document.addEventListener('DOMContentLoaded', () => {
             funOkSave();
         }
     }
+   
     function debounceSerie(func, interval, immediate) {
         var timer;
         return function () {
@@ -485,13 +493,13 @@ document.addEventListener('DOMContentLoaded', () => {
             renderCalendar();
             index >= slides.length - 1 ? false : index++;
             slider();
-            restoreInfo();
+            updateMonthDays();
         } else if (move == "right") {
             date.setMonth(date.getMonth() - 1);
             renderCalendar();
             index <= 0 ? false : index--;
             slider();
-            restoreInfo();
+            updateMonthDays();
         }
         move = "stop";
     }
