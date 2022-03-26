@@ -249,7 +249,7 @@ document.addEventListener('DOMContentLoaded', () => {
         containerBoxBtns.style.width = calendar.offsetWidth+"px";
         containerBoxBtns.style.top = calendar.offsetTop-40+"px";
         sizing();
-        if(window.innerWidth>window.innerHeight){
+        if(window.innerWidth>window.innerHeight && window.innerWidth<500){
             document.querySelector("html").style.fontSize = "4px";
         }else{
             document.querySelector("html").style.fontSize = "";
