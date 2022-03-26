@@ -425,13 +425,14 @@ document.addEventListener('DOMContentLoaded', () => {
             let zp = 800 / 12 * colgreen + 100 * colwhite;
             var divZp = document.getElementById("zp");
             divZp.innerHTML = `Salary: ${Math.round(zp)} Byn`;
-            setInterval(()=>{
+            setInterval(posZPfun,500);
+            function posZPfun(){
                 divZp.style.top =
                 (calendar.offsetTop + calendar.offsetHeight - divZp.offsetHeight) + "px";
             divZp.style.left =
                 (calendar.offsetLeft + calendar.offsetWidth - divZp.offsetWidth) + "px";
-
-            },500);
+            }
+            posZPfun();
             setTimeout(() => {
                 spinner.style.display = "none";
             }, 500);
