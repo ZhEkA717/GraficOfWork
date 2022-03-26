@@ -185,24 +185,43 @@ html{
 .weekend{
     color: rgba(255,0,0,0.8);
 }
+#container-box-btns{
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    height: 30px;
+    display: flex;
+    justify-content: space-between;
+    z-index: 3;
+}
 
 #refresh{
-    position: absolute;
+    /* position: absolute;
     right: 10px;
-    top: 10px;
+    top: 10px; */
     z-index: 10;
 }
 #download{
-    position: absolute;
+    /* position: absolute;
     left: 10px;
+    top: 10px; */
+    z-index: 10;
+    opacity: 0.9;
+}
+#return{
+    /* position: absolute;
     top: 10px;
+    left: 50%; */
     z-index: 10;
     opacity: 0.9;
 }
 
-#refresh:hover,#download:hover{
+#refresh:hover,
+#download:hover,
+#return:hover{
     opacity: 0.8;
     cursor: pointer;
+    transform: scale(1.1);
 }
 #zp{
     position: absolute;

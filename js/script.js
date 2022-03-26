@@ -2,7 +2,7 @@
 
 document.addEventListener('DOMContentLoaded', () => {
 
-    const spinner =document.querySelector("#loading img");
+    const spinner = document.querySelector("#loading img");
     const date = new Date();
     const renderCalendar = () => {
         const monthDays1 = document.querySelector(".days1"),
@@ -170,15 +170,18 @@ document.addEventListener('DOMContentLoaded', () => {
 
     }
 
-    function updateMonthDays(){
-        if((new Date().getMonth()==date.getMonth()) && 
-        (new Date().getFullYear() ==date.getFullYear())){
+    function updateMonthDays() {
+        if ((new Date().getMonth() == date.getMonth()) &&
+            (new Date().getFullYear() == date.getFullYear())) {
             restoreInfo();
         }
-    }
+       
+       
 
+    }
     document.querySelector(".prev").addEventListener('click', () => {
         date.setMonth(date.getMonth() - 1);
+        // date.setDate(new Date().getDate());
         renderCalendar();
         index <= 0 ? false : index--;
         slider();
@@ -223,6 +226,52 @@ document.addEventListener('DOMContentLoaded', () => {
             slider();
             updateMonthDays();
         }
+    });
+    let oneDate1 = new Date();
+    let oneDate2 = date;
+
+    function monthDiff(d1, d2) {
+        var months;
+        months = (d2.getFullYear() - d1.getFullYear()) * 12;
+        months -= d1.getMonth() + 1;
+        months += d2.getMonth();
+        return months <= 0 ? 0 : months;
+    }
+    function diffDates(day_one, day_two) {
+        return (day_one - day_two) / (60 * 60 * 24 * 1000);
+    };
+
+    let containerBoxBtns = document.getElementById("container-box-btns"),
+    btnReturnCldr = document.getElementById("return");
+    containerBoxBtns.style.width = calendar.offsetWidth+"px";
+    containerBoxBtns.style.top = calendar.offsetTop-20+"px";
+    btnReturnCldr.addEventListener("click", (EO) => {
+        if (diffDates(oneDate2,oneDate1)>0) {
+            for (let i = 0; i < monthDiff(oneDate1,oneDate2)+1; i++) {
+                setTimeout(() => {
+                    date.setMonth(date.getMonth() - 1);
+                    renderCalendar();
+                    index <= 0 ? false : index--;
+                    slider();
+                    updateMonthDays();
+                }, 500)
+            }
+            console.log("right");
+        }
+        if(diffDates(oneDate2,oneDate1)<-(new Date().getDate())){
+              for (let i = 0; i < monthDiff(oneDate2,oneDate1)+1; i++) {
+                setTimeout(() => {
+                    date.setMonth(date.getMonth() + 1);
+                    renderCalendar();
+                    index <= 0 ? false : index--;
+                    slider();
+                    updateMonthDays();
+                }, 500)
+            }
+            console.log("left");
+            console.log(diffDates(oneDate2,oneDate1));
+        }
+          
     });
 
     renderCalendar();
@@ -279,9 +328,9 @@ document.addEventListener('DOMContentLoaded', () => {
         if (callresult.error != undefined)
             alert(callresult.error);
         restoreInfo();
-        setTimeout(()=>{
-            spinner.style.display="none";
-        },500);
+        setTimeout(() => {
+            spinner.style.display = "none";
+        }, 500);
     }
 
     function restoreInfo() {
@@ -348,18 +397,19 @@ document.addEventListener('DOMContentLoaded', () => {
                     });
                 }
 
+
             });
             let greenClasses = document.querySelectorAll(".green");
-            let blackClasses = document.querySelectorAll(".orange");
+            let orangeClasses = document.querySelectorAll(".orange");
             let colgreen = 0;
             let colwhite = 0;
             greenClasses.forEach((item, i, arr) => {
                 colgreen = arr.length;
-                item.setAttribute("data-title","Рабочий день 8 часов");
+                item.setAttribute("data-title", "Рабочий день 8 часов");
             })
-            blackClasses.forEach((item, i, arr) => {
+            orangeClasses.forEach((item, i, arr) => {
                 colwhite = arr.length;
-                item.setAttribute("data-title","Рабочий день 12 часов");
+                item.setAttribute("data-title", "Рабочий день 12 часов");
             })
 
             let zp = 800 / 12 * colgreen + 100 * colwhite;
@@ -369,10 +419,25 @@ document.addEventListener('DOMContentLoaded', () => {
                 (calendar.offsetTop + calendar.offsetHeight - divZp.offsetHeight) + "px";
             divZp.style.left =
                 (calendar.offsetLeft + calendar.offsetWidth - divZp.offsetWidth) + "px";
-            setTimeout(()=>{
+            setTimeout(() => {
                 spinner.style.display = "none";
-            },500);
-                
+            }, 500);
+
+            let lastDay = new Date(date.getFullYear(),
+                date.getMonth() + 1, 0).getDate();
+            for (let i = 1; i < lastDay; i++) {
+                if (i === new Date().getDate() &&
+                    date.getMonth() === new Date().getMonth()) {
+                    numArray.forEach((item) => {
+                        if (item.classList.contains("today")) {
+                            item.classList.remove("today");
+                        }
+                        if (item.innerHTML == i) {
+                            item.classList.add("today");
+                        }
+                    });
+                }
+            }
         }
     }
 
@@ -382,7 +447,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     restoreInfo();
-    
+
 
     document.getElementById('download').addEventListener("click", funSaveGrafic);
     const boxInput = document.querySelector("#boxInput input");
@@ -408,8 +473,8 @@ document.addEventListener('DOMContentLoaded', () => {
         }, 500);
     }
 
-    boxPassword.addEventListener("click",(EO)=>{
-        if(EO.target.classList.contains("boxPassword")){
+    boxPassword.addEventListener("click", (EO) => {
+        if (EO.target.classList.contains("boxPassword")) {
             fundivClose();
         }
     });
@@ -420,7 +485,7 @@ document.addEventListener('DOMContentLoaded', () => {
     function funOkSave() {
         if (boxInput.value == "unypyrebe") {
             storeInfo();
-            spinner.style.display="block";
+            spinner.style.display = "block";
             boxInput.value = "";
             fundivClose();
         } else {
@@ -430,13 +495,13 @@ document.addEventListener('DOMContentLoaded', () => {
             pOK.style.display = "none";
         }
     }
-    function funOkSaveEnter(EO){
-        EO=EO||window.event;
-        if(EO.code == "Enter" && boxInput.style.display =="block"){
+    function funOkSaveEnter(EO) {
+        EO = EO || window.event;
+        if (EO.code == "Enter" && boxInput.style.display == "block") {
             funOkSave();
         }
     }
-   
+
     function debounceSerie(func, interval, immediate) {
         var timer;
         return function () {
@@ -555,4 +620,8 @@ slidesBox.addEventListener('transitionend', () => {
         slidesBox.style.transform = "translateX(" + (-index * slidesBox.offsetWidth) + "px)";
     }
 });
+
+
+
+
 
