@@ -256,7 +256,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     updateMonthDays();
                 }, 500)
             }
-            console.log("right");
         }
         if(diffDates(oneDate2,oneDate1)<-(new Date().getDate())){
               for (let i = 0; i < monthDiff(oneDate2,oneDate1)+1; i++) {
@@ -268,8 +267,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     updateMonthDays();
                 }, 500)
             }
-            console.log("left");
-            console.log(diffDates(oneDate2,oneDate1));
         }
           
     });
@@ -606,7 +603,7 @@ window.addEventListener("resize", () => {
 
 function slider() {
     slidesBox.style.transform = "translateX(" + (-index * slidesBox.offsetWidth) + "px)";
-    slidesBox.style.transition = "transform .5s ease-in-out";
+    slidesBox.style.transition = "transform .1s ease-in-out";
 }
 
 slidesBox.addEventListener('transitionend', () => {
