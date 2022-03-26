@@ -243,8 +243,21 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let containerBoxBtns = document.getElementById("container-box-btns"),
     btnReturnCldr = document.getElementById("return");
-    containerBoxBtns.style.width = calendar.offsetWidth+"px";
-    containerBoxBtns.style.top = calendar.offsetTop-40+"px";
+    window.addEventListener('resize', orientFun, false);
+    function orientFun(EO) {
+        EO = EO || window.event;
+        containerBoxBtns.style.width = calendar.offsetWidth+"px";
+        containerBoxBtns.style.top = calendar.offsetTop-40+"px";
+        sizing();
+        if(window.innerWidth>window.innerHeight){
+            document.querySelector("html").style.fontSize = "4px";
+        }else{
+            document.querySelector("html").style.fontSize = "";
+        }
+    }
+    setInterval(function () {
+        orientFun();
+    }, 100);
     btnReturnCldr.addEventListener("click", (EO) => {
         if (diffDates(oneDate2,oneDate1)>0) {
             for (let i = 0; i < monthDiff(oneDate1,oneDate2)+1; i++) {
@@ -410,12 +423,15 @@ document.addEventListener('DOMContentLoaded', () => {
             })
 
             let zp = 800 / 12 * colgreen + 100 * colwhite;
-            const divZp = document.getElementById("zp");
+            var divZp = document.getElementById("zp");
             divZp.innerHTML = `Salary: ${Math.round(zp)} Byn`;
-            divZp.style.top =
+            setInterval(()=>{
+                divZp.style.top =
                 (calendar.offsetTop + calendar.offsetHeight - divZp.offsetHeight) + "px";
             divZp.style.left =
                 (calendar.offsetLeft + calendar.offsetWidth - divZp.offsetWidth) + "px";
+
+            },500);
             setTimeout(() => {
                 spinner.style.display = "none";
             }, 500);
@@ -594,12 +610,6 @@ function sizing() {
     slidesBox.style.transform = "translateX(" + (-slidesBox.offsetWidth) + "px)";
     container.style.width = calendar.offsetWidth + 1 + "px";
 }
-
-sizing();
-
-window.addEventListener("resize", () => {
-    sizing();
-});
 
 function slider() {
     slidesBox.style.transform = "translateX(" + (-index * slidesBox.offsetWidth) + "px)";
