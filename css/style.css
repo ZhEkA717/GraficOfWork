@@ -195,25 +195,10 @@ html{
     z-index: 3;
 }
 
-#refresh{
-    /* position: absolute;
-    right: 10px;
-    top: 10px; */
-    z-index: 10;
-}
-#download{
-    /* position: absolute;
-    left: 10px;
-    top: 10px; */
-    z-index: 10;
-    opacity: 0.9;
-}
+#refresh,
+#download,
 #return{
-    /* position: absolute;
-    top: 10px;
-    left: 50%; */
     z-index: 10;
-    opacity: 0.9;
 }
 
 #refresh:hover,

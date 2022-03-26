@@ -244,7 +244,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let containerBoxBtns = document.getElementById("container-box-btns"),
     btnReturnCldr = document.getElementById("return");
     containerBoxBtns.style.width = calendar.offsetWidth+"px";
-    containerBoxBtns.style.top = calendar.offsetTop-20+"px";
+    containerBoxBtns.style.top = calendar.offsetTop-40+"px";
     btnReturnCldr.addEventListener("click", (EO) => {
         if (diffDates(oneDate2,oneDate1)>0) {
             for (let i = 0; i < monthDiff(oneDate1,oneDate2)+1; i++) {
