@@ -254,7 +254,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     index <= 0 ? false : index--;
                     slider();
                     updateMonthDays();
-                }, 500)
+                }, 0)
             }
         }
         if(diffDates(oneDate2,oneDate1)<-(new Date().getDate())){
@@ -265,7 +265,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     index <= 0 ? false : index--;
                     slider();
                     updateMonthDays();
-                }, 500)
+                }, 0)
             }
         }
           
